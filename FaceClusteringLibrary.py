@@ -47,12 +47,12 @@ class FramesGenerator:
 
         height, width, _ = frame.shape
 
-        if height > 500:
-            frame = resizeUtils.rescale_by_height(frame, 500)
+        if height > 1080:
+            frame = resizeUtils.rescale_by_height(frame, 1080)
             self.AutoResize(frame)
         
-        if width > 700:
-            frame = resizeUtils.rescale_by_width(frame, 700)
+        if width > 1920:
+            frame = resizeUtils.rescale_by_width(frame, 1920)
             self.AutoResize(frame)
         
         return frame
@@ -144,7 +144,7 @@ class FaceEncoder(Node):
         imagePath = data['imagePath']
         image = cv2.imread(imagePath)
         rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-        boxes = face_recognition.face_locations(rgb, model=self.detection_method)
+        boxes = face_recognition.face_locations(rgb, model=self.detection_method, number_of_times_to_upsample=0)
         encodings = face_recognition.face_encodings(rgb, boxes)
         d = [{"imagePath": imagePath, "loc": box, "encoding": enc} 
                 for (box, enc) in zip(boxes, encodings)]
